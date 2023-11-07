@@ -9,6 +9,7 @@ import AuthRouter from '../routes/authRoute.js';
 
 //db connection
 import connectDB from '../config/dbConnect.js';
+import { errorHandler, notFound } from '../middlewares/errorHandler.js';
 connectDB();
 
 
@@ -24,6 +25,9 @@ app.use(bodyParser.urlencoded({extended:false}));
 //Routes
 app.use('/api/user',AuthRouter)
 
+//middleware
+app.use(notFound)
+app.use(errorHandler)
 
 
 
