@@ -4,7 +4,7 @@ dotenv.config();
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import AuthRouter from '../routes/authRoute.js';
-
+import ProductRouter from '../routes/productRoute.js';
 
 
 //db connection
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(cookieParser())
 
 app.use('/api/user',AuthRouter)
-
+app.use('/api/product',ProductRouter)
 //Routes
 
 //middleware
