@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
 import bodyParser from 'body-parser';
-
+import cookieParser from 'cookie-parser';
 import AuthRouter from '../routes/authRoute.js';
 
 
@@ -20,15 +20,16 @@ const PORT=process.env.PORT;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
+app.use(cookieParser())
 
-
-//Routes
 app.use('/api/user',AuthRouter)
 
+//Routes
+
 //middleware
+
 app.use(notFound)
 app.use(errorHandler)
-
 
 
 

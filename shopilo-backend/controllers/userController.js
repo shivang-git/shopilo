@@ -1,9 +1,15 @@
 import User from "../models/userModel.js";
 import asyncHandler from "express-async-handler";
+import jwt from 'jsonwebtoken'
 import { GenerateToken } from "../config/jwtToken.js";
+import { validateMongodbId } from "../utils/validateMongodb.js";
+import { GenerateRefreshToken } from "../config/refreshToken.js";
+
+
 
 export const RegisterUser = asyncHandler(async (req, res) => {
   const email = req.body.email;
+
   const findUser = await User.findOne({ email });
   if (!findUser) {
     const newUser = User.create(req.body);
@@ -13,10 +19,16 @@ export const RegisterUser = asyncHandler(async (req, res) => {
   }
 });
 
-export const LoginUer = asyncHandler(async (req, res) => {
+export const LoginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const findUser = await User.findOne({ email });
   if (findUser && (await findUser.isPasswordMatch(password))) {
+    const refreshToken=await GenerateRefreshToken(findUser.id )
+    const updatetoken=await User.findByIdAndUpdate(findUser.id,{refreshToken:refreshToken},{new:true})
+    res.cookie('refreshToken',refreshToken,{
+      httpOnly:true,
+      maxAge:72*60*60*1000
+    })
     res.json({
       _id: findUser?._id,
       firstname: findUser?.firstname,
@@ -32,6 +44,7 @@ export const LoginUer = asyncHandler(async (req, res) => {
 
 export const GetUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  validateMongodbId(id);
   try {
     const getUser = await User.findById(id);
     res.json({ getUser });
@@ -52,6 +65,8 @@ export const GetallUser = asyncHandler(async (req, res) => {
 
 export const DeleteUser = asyncHandler(async (req, res) => {
     const { id } = req.params;
+  validateMongodbId(id);
+
     try {
       const deleteUser = await User.findByIdAndDelete(id);
       res.json(deleteUser);
@@ -63,6 +78,8 @@ export const DeleteUser = asyncHandler(async (req, res) => {
 
 export const UpdateUser = asyncHandler(async (req, res) => {
     const {id}=req.user
+    validateMongodbId(id);
+
     const {firstname,lastname,email,mobile}=req.body;
     try {
       const updateUser = await User.findByIdAndUpdate(id,{
@@ -78,3 +95,41 @@ export const UpdateUser = asyncHandler(async (req, res) => {
       throw new Error(error);
     }
 });
+
+
+export const HandleRefreshToken=asyncHandler(async(req,res)=>{
+  const {refreshToken}=req.cookies;
+  if(!refreshToken) throw new Error('No refresh token')
+  const user=await User.findOne({refreshToken})
+  if(!user) throw new Error("no refreshtoken in db")
+  jwt.verify(refreshToken,process.env.SECRET_KEY,((err,decoded)=>{
+    if(err|| user.id!== decoded.id) {throw new Error('refresh token incorrect')}
+  }))
+  const accessToken= GenerateToken(user.id)
+  res.json({accessToken})
+})
+
+
+
+export const LogoutUser=asyncHandler(
+  async(req,res)=>{
+    const {refreshToken}=req.cookies
+    if(!refreshToken) throw new Error('No refresh token')
+    const user=await User.findOne({refreshToken})
+    if(!user){
+      res.clearCookie("refreshToken",{
+        httpOnly:true,
+        secure:true
+      })
+      return res.sendStatus(204)
+    }
+    await User.findOneAndUpdate({refreshToken},{
+      refreshToken:"",
+    })
+    res.clearCookie("refreshToken",{
+      httpOnly:true,
+      secure:true
+    })
+    return res.sendStatus(204)
+  }
+)
