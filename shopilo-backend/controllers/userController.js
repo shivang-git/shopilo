@@ -4,7 +4,8 @@ import jwt from 'jsonwebtoken'
 import { GenerateToken } from "../config/jwtToken.js";
 import { validateMongodbId } from "../utils/validateMongodb.js";
 import { GenerateRefreshToken } from "../config/refreshToken.js";
-
+import { sendEmail } from "../config/emailconfig.js";
+import crypto from 'crypto'
 
 
 export const RegisterUser = asyncHandler(async (req, res) => {
@@ -133,3 +134,60 @@ export const LogoutUser=asyncHandler(
     return res.sendStatus(204)
   }
 )
+
+
+
+export const UpdatePassword= asyncHandler(
+  async(req,res)=>{
+    const {id}=req.user
+    const {password}=req.body
+    const user=await User.findById(id);
+    if(password){
+      user.password=password
+      const updatedPassword=await user.save()
+      res.json({
+        msg:"pass updated"
+      })
+    }else{
+      res.json(user)
+    }
+  }
+)
+
+
+export const ForgotPasswordToken=asyncHandler(async(req,res)=>{
+    const {email}=req.body;
+    const user=await User.findOne({email});
+    if(!user) throw new Error("user not present")
+    try {
+      const token =await user.CreatePassowrdResetToken();
+      await user.save();
+      const resetUrl=`<p>Follow the given link to reset the password.this link is valid till 10 minutes.</p> <a href=http://localhost:5000/api/user/reset-password/${token}> Click here </a>`
+      const data={
+        to:email,
+        text:"hello",
+        subject:"forget password link",
+        html:resetUrl
+      }
+      sendEmail(data)
+      res.json(token)
+    } catch (error) {
+      throw new Error(error)
+    }
+})
+
+export const ResetPassword=async(req,res)=>{
+  const {password}=req.body
+  const {token}=req.params
+  const hashedToken=crypto.createHash('sha256').update(token).digest("hex")
+  const user=await User.findOne({
+    passwordResetToken:hashedToken,
+    passwordResetExpires:{$gt:new Date.Now()}
+  })
+  if(!user) throw new Error("token expired")
+  user.password=password
+  user.passwordResetToken=undefined;
+  user.passwordResetExpires=undefined;
+  await user.save();
+  res.json(user);
+}
