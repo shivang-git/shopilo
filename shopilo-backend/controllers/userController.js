@@ -6,7 +6,10 @@ import { validateMongodbId } from "../utils/validateMongodb.js";
 import { GenerateRefreshToken } from "../config/refreshToken.js";
 import { sendEmail } from "../config/emailconfig.js";
 import crypto from 'crypto'
-
+import Product from '../models/productModel.js'
+import Cart from '../models/cartModel.js'
+import uniqid from 'uniqid'
+import Order from "../models/orderModel.js";
 
 export const RegisterUser = asyncHandler(async (req, res) => {
   const email = req.body.email;
@@ -42,6 +45,33 @@ export const LoginUser = asyncHandler(async (req, res) => {
     throw new Error("invalild Credentials");
   }
 });
+
+export const LoginAdmin = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  const findAdmin = await User.findOne({ email });
+  if(findAdmin.role!=="admin") throw new Error("not authorised")
+  if (findAdmin && (await findAdmin.isPasswordMatch(password))) {
+    const refreshToken=await GenerateRefreshToken(findAdmin.id )
+    const updatetoken=await User.findByIdAndUpdate(findAdmin.id,{refreshToken:refreshToken},{new:true})
+    res.cookie('refreshToken',refreshToken,{
+      httpOnly:true,
+      maxAge:72*60*60*1000
+    })
+    res.json({
+      _id: findAdmin?._id,
+      firstname: findAdmin?.firstname,
+      lastname: findAdmin?.lastname,
+      email: findAdmin?.email,
+      mobile: findAdmin?.mobile,
+      token: GenerateToken(findAdmin?._id),
+    });
+  } else {
+    throw new Error("invalild Credentials");
+  }
+});
+
+
+
 
 export const GetUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -182,7 +212,7 @@ export const ResetPassword=async(req,res)=>{
   const hashedToken=crypto.createHash('sha256').update(token).digest("hex")
   const user=await User.findOne({
     passwordResetToken:hashedToken,
-    passwordResetExpires:{$gt:new Date.Now()}
+    passwordResetExpires:{$gt:Date.now()}
   })
   if(!user) throw new Error("token expired")
   user.password=password
@@ -191,3 +221,148 @@ export const ResetPassword=async(req,res)=>{
   await user.save();
   res.json(user);
 }
+
+
+
+export const getWishlist=async(req,res)=>{
+  try {
+    const {id}=req.user
+    const findUser=await User.findById(id).populate('wishlist')
+    res.json(findUser)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export const saveAddress=async(req,res)=>{
+  const {id}=req.user
+  try {
+    const updatedUser=await User.findByIdAndUpdate(id,{address:req.body.address},{new:true})
+    res.json(updatedUser)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+
+export const userCart=async(req,res)=>{
+  const {cart}=req.body
+  const {id}=req.user
+  try {
+    let products=[]
+    const user=await User.findById(id);
+    const cartExist= await Cart.findOne({orderby:user.id})
+    if(cartExist){
+      cartExist.remove()
+    }
+    for(let i=0;i<cart.length;i++){
+      let object={}
+      object.product=cart[i].id;
+      object.count=cart[i].count
+      object.color=cart[i].color;
+      let getPrice=await Product.findById(card[i].id).select("price").exec();
+      object.price=getPrice.price;
+      products.push(object)
+    }
+    let cartTotal=0;
+    for(let i=0;i<products.length;i++){
+      cartTotal=cartTotal+products[i].price*products[i].count
+    }
+    let newCart=await new Cart({
+      products,
+      cartTotal,
+      orderby:user.id
+    }).save()
+    res.json(newCart)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export const getUserCart=async(req,res)=>{
+  const {id}=req.user
+  try {
+    const cart=await Cart.findOne({orderby:id}).populate("products.product")
+    res.json(cart)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export const emptyCart=async(req,res)=>{
+  const {id}=req.user
+  try {
+    const user=await User.findOne({id})
+    const cart=await Cart.findByIdAndRemove({orderby:user.id})
+    res.json(cart)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+
+export const CreateOrder=async(req,res)=>{
+  const {cod}=req.body;
+  const {id}=req.user
+  try {
+    if(!cod) throw new Error('create cash order failed')
+    const user=await User.findById(id)
+    let userCart=await Cart.findOne({orderby:user.id})
+    let finalAmount=userCart.cartTotal*100
+    let newOrder=await new Order({
+      products:userCart.products,
+      paymentIntent:{
+        id:uniqid(),
+        method:"COD",
+        amount:finalAmount,
+        status:"Cash on Delivery",
+        created:Date.now(),
+        currency:'usd'
+      },
+      orderby:user.id,
+      orderStatus:"Cash on Delivery"
+    }).save()
+    let update=userCart.products.map((item)=>{
+      return{updateOne:{
+        filter:{id:item.product.id},
+        update:{$inc:{quantity:-item.count,sold:+item.count}}
+      }}
+    })
+    const updated=await Product.bulkWrite(update,{})
+    res.json({msg:"success"})
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export const getOrders=async(req,res)=>{
+  const {id}=req.user;
+  try {
+    const userOrders=await Order.findOne({orderby:id}).populate('products.product')
+    res.json(userOrders)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+
+export const updateOrderStatus=async(req,res)=>{
+  const {status}=req.body;
+  const {id}=req.params
+  try {
+    const updateOrderStatus=await Order.findByIdAndUpdate(id,{
+      orderStatus:status,
+      paymentIntent:{
+        status:status,
+      }
+    },{new:true})
+    res.json(updateOrderStatus)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+
+
+
+
