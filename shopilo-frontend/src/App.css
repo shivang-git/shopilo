@@ -1,15 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration:none;
 }
 
 :root{
   --color-232f3e:#232f3e;
   --color-131921:#131921;
+  --color-febd69:#febd69;
+  --color-ff9c1c:#ff9c1c;
+  --color-E3E6E6:#E3E6E6;
 }
 
-a{
+body{
+  font-family: 'Lato', sans-serif;
+  background-color: var(--color-E3E6E6);
+}
+
+a,Link{
   text-decoration: none;
   display: inline-block;
 }
@@ -17,3 +28,30 @@ a{
 .header-top{
   background-color: var(--color-232f3e);
 }
+
+.header-mid{
+  background-color: var(--color-131921);
+}
+
+.header-mid-search .input-group-text{
+  background-color: var(--color-febd69);
+}
+
+.header-mid-search .input-group-text:hover{
+  background-color: var(--color-ff9c1c);
+}
+
+.form-control:focus{
+  border-color: inherit;
+  box-shadow: none;
+}
+
+.gap-10{
+  gap:10px;
+}
+
+.header-bottom-links{
+  width:30px;
+  height:30px;
+}
+
