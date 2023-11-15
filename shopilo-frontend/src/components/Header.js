@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
-import {FaArrowsRotate} from 'react-icons/fa6'
+
 const Header = () => {
   return (
     <>
@@ -17,19 +17,19 @@ const Header = () => {
             <div className="col-6">
               <p className="text-end text-white mb-0">
                 Helpline:
-                <a className="text-white" href="tel:1800 556 2000">
+                <Link className="text-white" href="tel:1800 556 2000">
                   1800 556 2000
-                </a>
+                </Link>
               </p>
             </div>
           </div>
         </div>
       </header>
-      <header className="header-mid py-1 text-white">
+      <header className="header-mid py-1 text-white px-2">
         <div className="container-fluid-xxl">
-          <div className="row">
+          <div className="row aligh-item-center py-2">
             {/* logo */}
-            <div className="col-1 header-mid-right py-1 p-4">
+            <div className="header-mid-right py-2">
               <h2 className="mb-0 text-center">
                 <Link className="text-white text-decoration-none" to="/">
                   Shopilo.com
@@ -37,8 +37,35 @@ const Header = () => {
               </h2>
             </div>
 
-            <div className="col-1 text-center">
-              Shop by <br /> Category
+            {/* category */}
+            <div className="col-1 category text-center">
+            <div className="dropdown">
+                <button
+                  className="btn btn-secondary dropdown-toggle bg-transparent border-0"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Shop by Category
+                </button>
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link className="dropdown-item " to=''>
+                      Action
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to=''>
+                      Another action
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to=''>
+                      Something else here
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
             {/* search bar */}
             <div className=" col-2 header-mid-search py-2  w-50">
@@ -56,32 +83,42 @@ const Header = () => {
               </div>
             </div>
             {/* login cart wishlist */}
-            <div className="col-3 ">
-              <div className="header-mid-left d-flex align-item-center justify-content-around">
+            <div className="col-3">
+              <div className="header-mid-left d-flex align-item-center justify-content-between">
                 <div>
-                  <Link className="d-flex align-item-center justify-content-center gap-10 text-white text-decoration-none">
-                  <FaArrowsRotate className="fs-3"/>
-                    <p>Compare <br />Products</p>
+                  <Link className="d-flex align-item-center justify-content-center  gap-10 text-white text-decoration-none">
+                    <img src="/images/compare.svg" alt="compare" />
+                    <p className="mb-0">
+                      Compare <br />
+                      Products
+                    </p>
                   </Link>
                 </div>
                 <div>
-                  <Link className="d-flex align-item-center gap-10 text-white text-decoration-none">
-                    <img src="" alt="" />
-                    <p> Favourite/<br />Wishlists</p>
+                  <Link className="d-flex align-item-center justify-content-center  gap-10 text-white text-decoration-none">
+                    <img src="/images/wishlist.svg" alt="wishlist" />
+                    <p className="mb-0">
+                      Wishlist <br />
+                      Favourite
+                    </p>
                   </Link>
                 </div>
                 <div>
-                  <Link className="d-flex align-item-center gap-10 text-white text-decoration-none">
-                    <img src="" alt="" />
-                    <p>Login/<br />Sign up</p>
+                  <Link className="d-flex align-item-center justify-content-center  gap-10 text-white text-decoration-none">
+                    <img src="/images/user.svg" alt="login" />
+                    <p className="mb-0">
+                      Login/
+                      <br />
+                      Sign up
+                    </p>
                   </Link>
                 </div>
                 <div>
-                  <Link className="d-flex align-item-center gap-10 text-white text-decoration-none">
-                    <img src="" alt="" />
-                    <div className="d-flex flex-column gap-10">
-                      <span className="badge bg-white text-dark">0</span>
-                        <p className="mb-0">Rs. 5000</p>
+                  <Link className="d-flex align-item-start  gap-10 text-white text-decoration-none">
+                    <img src="/images/cart.svg" alt="cart" />
+                    <div className="d-flex flex-column">
+                      <span className="badge bg-white text-dark">15</span>
+                      <p className="mb-0">Rs. 500</p>
                     </div>
                   </Link>
                 </div>
@@ -90,12 +127,38 @@ const Header = () => {
           </div>
         </div>
       </header>
+
       <header className="header-bottom py-3">
         <div className="container-xxl">
-          <div className="row ">
-            <div className="col-12">
-
-            </div>
+          <div className="row">
+            
+              <div className=" col-12 gap-3 header-bottom-links d-flex align-item-center justify-content-center w-100">
+                <NavLink className="text-decoration-none text-white" to="/">
+                  Home
+                </NavLink>
+                |
+                <NavLink
+                  className="text-decoration-none text-white"
+                  to="/products"
+                >
+                  Our Products
+                </NavLink>
+                |
+                <NavLink
+                  className="text-decoration-none text-white"
+                  to="/blogs"
+                >
+                  Blogs
+                </NavLink>
+                |
+                <NavLink
+                  className="text-decoration-none text-white"
+                  to="/contact"
+                >
+                  24x7 Customer Care
+                </NavLink>
+              </div>
+          
           </div>
         </div>
       </header>
