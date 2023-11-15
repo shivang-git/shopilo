@@ -8,9 +8,9 @@ const Home = () => {
       <section className="home-wrapper-1 py-3">
         <div className="container-xxl">
           <div className="row">
-            <div className="col-6">
-              <div className="banner-content p-3">
-                <img src="images/main-banner.jpg" alt="" />
+            <div className="col-12">
+              <div className="banner-content p-3 d-flex justify-content-center">
+               <img src="images/banner-1.jpg" alt="" />
               </div>
             </div>
           </div>
@@ -78,11 +78,10 @@ const Home = () => {
             <div className="col-12">
               <h3 className="product-heading">Featured Collection</h3>
             </div>
-            <ProductCard/>
-            <ProductCard/>
-            <ProductCard/>
-            <ProductCard/>
-          
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
           </div>
         </div>
       </section>
@@ -100,6 +99,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
     </>
   );
 };
