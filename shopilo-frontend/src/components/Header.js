@@ -26,7 +26,7 @@ const Header = () => {
         </div>
       </header>
       <header className="header-mid py-1 text-white px-2">
-        <div className="container-fluid-xxl">
+        <div className="container-fluid">
           <div className="row aligh-item-center py-2">
             {/* logo */}
             <div className="header-mid-right py-2">
@@ -84,9 +84,9 @@ const Header = () => {
             </div>
             {/* login cart wishlist */}
             <div className="col-3">
-              <div className="header-mid-left d-flex align-item-center justify-content-between">
+              <div className="header-mid-left d-flex align-items-center justify-content-between">
                 <div>
-                  <Link className="d-flex align-item-center justify-content-center  gap-10 text-white text-decoration-none">
+                  <Link to='/compare-product' className="d-flex align-items-center justify-content-center  gap-10 text-white text-decoration-none">
                     <img src="/images/compare.svg" alt="compare" />
                     <p className="mb-0">
                       Compare <br />
@@ -95,16 +95,16 @@ const Header = () => {
                   </Link>
                 </div>
                 <div>
-                  <Link className="d-flex align-item-center justify-content-center  gap-10 text-white text-decoration-none">
+                  <Link to='wishlist' className="d-flex align-items-center justify-content-center  gap-10 text-white text-decoration-none">
                     <img src="/images/wishlist.svg" alt="wishlist" />
                     <p className="mb-0">
-                      Wishlist <br />
+                      Wishlist/ <br />
                       Favourite
                     </p>
                   </Link>
                 </div>
                 <div>
-                  <Link className="d-flex align-item-center justify-content-center  gap-10 text-white text-decoration-none">
+                  <Link to='/login' className="d-flex align-items-center justify-content-center  gap-10 text-white text-decoration-none">
                     <img src="/images/user.svg" alt="login" />
                     <p className="mb-0">
                       Login/
@@ -114,7 +114,7 @@ const Header = () => {
                   </Link>
                 </div>
                 <div>
-                  <Link className="d-flex align-item-start  gap-10 text-white text-decoration-none">
+                  <Link to='/cart' className="d-flex align-items-start  gap-10 text-white text-decoration-none">
                     <img src="/images/cart.svg" alt="cart" />
                     <div className="d-flex flex-column">
                       <span className="badge bg-white text-dark">15</span>
@@ -132,7 +132,7 @@ const Header = () => {
         <div className="container-xxl">
           <div className="row">
             
-              <div className=" col-12 gap-3 header-bottom-links d-flex align-item-center justify-content-center w-100">
+              <div className=" col-12 gap-3 header-bottom-links d-flex align-items-center justify-content-center w-100">
                 <NavLink className="text-decoration-none text-white" to="/">
                   Home
                 </NavLink>

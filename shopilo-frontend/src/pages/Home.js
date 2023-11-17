@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <section className="home-wrapper-1 py-3">
-        <div className="container-xxl">
+        <div className="container">
           <div className="row">
             <div className="col-12">
               <div className="banner-content p-3 d-flex justify-content-center">
@@ -18,7 +18,7 @@ const Home = () => {
       </section>
 
       <section className="home-wrapper-2 py-3">
-        <div className="container-xxl">
+        <div className="container">
           <div className="row">
             <div className="col-12">
               <div className="d-flex  align-item-center justify-content-between">
@@ -92,10 +92,20 @@ const Home = () => {
             <div className="col-12">
               <h3 className="blog-heading">Our Latest Blogs</h3>
             </div>
+          </div>
+          <div className="row">
+            <div className="col-3">
             <BlogCard />
+            </div>
+            <div className="col-3">
             <BlogCard />
+            </div>
+            <div className="col-3">
             <BlogCard />
+            </div>
+            <div className="col-3">
             <BlogCard />
+            </div>
           </div>
         </div>
       </section>
