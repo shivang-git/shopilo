@@ -1,16 +1,23 @@
 import React from 'react'
 import {Link, useLocation} from 'react-router-dom'
+import prodcompare from '../images/prodcompare.svg'
+import wish from '../images/wish.svg'
+
+import watch from '../images/watch.jpg'
+import addcart from '../images/add-cart.svg'
+import view from '../images/view.svg'
+
 
 const ProductCard = ({grid}) => {
     let location=useLocation()
   return (
     <div className={`${location.pathname==='/store' ? `col-${grid} pb-4` : "col-3 pb-4" }`} >
-        <div className="product-card position-relative">
+        <Link to={`${location.pathname==='/'? 'store/:id':':id'}`} className="product-card position-relative">
         <div className="wishlist-icon position-absolute">
-            <Link><img src="images/wish.svg" alt="wishlist" /></Link>
+            <Link to={`${location.pathname==='/'? 'store/:id':'/:id'}`}><img src={wish} alt="wishlist" /></Link>
         </div>
             <div className="product-image">
-                <img className='img-fluid d-block mx-auto' src="images/watch.jpg" alt="watch" />
+                <img className='img-fluid d-block mx-auto' src={watch} alt="watch" />
             </div>
             <div className="product-details">
                 <h6 className='brand'>Watch</h6>
@@ -22,13 +29,13 @@ const ProductCard = ({grid}) => {
             </div>
             <div className="action-bar position-absolute">
                 <div className="d-flex flex-column gap-15">
-                    <Link><img src="images/prodcompare.svg" alt="compare" /></Link>
-                    <Link><img src="images/view.svg" alt="view" /></Link>
-                    <Link><img src="images/add-cart.svg" alt="addcart" /></Link>
+                    <Link><img src={prodcompare} alt="compare" /></Link>
+                    <Link><img src={view} alt="view" /></Link>
+                    <Link><img src={addcart} alt="addcart" /></Link>
                     
                 </div>
             </div>
-        </div>
+        </Link>
     </div>
   )
 }

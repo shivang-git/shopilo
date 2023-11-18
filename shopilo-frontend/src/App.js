@@ -13,6 +13,9 @@ import Login from './pages/Login.js';
 import Signup from './pages/Signup.js';
 import ForgotPassword from './pages/ForgotPassword.js';
 import ResetPassword from './pages/ResetPassword.js';
+import ProductPage from './pages/ProductPage.js';
+import Cart from './pages/Cart.js';
+import Checkout from './pages/Checkout.js';
 function App() {
   return (
     <>
@@ -31,6 +34,9 @@ function App() {
           <Route path='forgot-password' element={<ForgotPassword/>}/>
           <Route path='reset-password' element={<ResetPassword/>}/>
           <Route path='signup' element={<Signup/>}/>
+          <Route path='store/:id' element={<ProductPage/>}/>
+          <Route path='cart' element={<Cart/>}/>
+          <Route path='cart/checkout' element={<Checkout/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
