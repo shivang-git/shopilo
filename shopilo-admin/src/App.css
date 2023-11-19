@@ -1,38 +1,355 @@
-.App {
-  text-align: center;
+body{
+    font-family: Roboto,sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+:root {
+  --color-232f3e: #232f3e;
+  --color-131921: #131921;
+  --color-febd69: #febd69;
+  --color-ff9c1c: #ff9c1c;
+  --color-E3E6E6: #E3E6E6;
+  --color-37475A: #37475A;
+  --color-232F3E: #232F3E;
+  --color-485769: #485769;
+  --color-f5f5f7: #f5f5f7;
+  --color-bf4800: #bf4800;
+  --color-1c1c1b: #1c1c1b;
+} 
+
+.ant-layout{
+    min-height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
+.home-wrapper-1{
+  background-color: var(--color-f5f5f7);
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+/* login page start */
+
+.login-wrapper{
+  background-color: var(--color-f5f5f7);
+  min-height: 100vh;
+}
+
+
+.login-card{
+  padding: 20px;
+  background-color:white;
+  width: 500px;
+  margin: 30px auto;
+}
+
+.login-card h3{
+  font-size: 19px;
+  font-weight: 500;
+  color: #777;
+}
+
+.login-card .form-control{
+  height: 50px;
+  background-color: var(--color-f5f5f7);
+  color: #777;
+  font-size: 14px;
+  border-color: transparent;
+}
+
+.login-card .login{
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-1c1c1b);
+  padding:10px 20px;
+  border-radius: 100px;
+}
+
+.login-card .login{
+  background-color: var(--color-232F3E);
+
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.login-card .login:hover{
+  background-color: var(--color-febd69);
+  color: var(--color-131921);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login-card a{
+  font-size: 14px;
 }
+
+
+/* login page end */
+
+
+
+/* signup page start */
+.sign-wrapper{
+  background-color: var(--color-f5f5f7);
+  min-height: 100vh;
+}
+
+
+.sign-card{
+  padding: 20px;
+  background-color: white;
+  width: 500px;
+  margin: 30px auto;
+}
+
+.sign-card h3{
+  font-size: 19px;
+  font-weight: 500;
+  color: #777;
+}
+
+.sign-card .form-control{
+  height: 50px;
+  background-color: var(--color-f5f5f7);
+  color: #777;
+  font-size: 14px;
+  border-color: transparent;
+}
+
+.sign-card button{
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+
+  padding:10px 20px;
+  border-radius: 100px;
+  background-color: var(--color-232F3E);
+
+
+}
+
+
+.sign-card .button:hover{
+  background-color: var(--color-febd69);
+  color: var(--color-131921);
+}
+
+
+/* signup page end */
+
+
+/* forgot password page start */
+
+.forget-password-card{
+  padding: 20px;
+  background-color: white;
+  width: 500px;
+  margin: 30px auto;
+}
+
+.forget-password-card h3{
+  font-size: 19px;
+  font-weight: 500;
+  color: #777;
+}
+
+.forget-password-card .form-control{
+  height: 50px;
+  background-color: var(--color-f5f5f7);
+  color: #777;
+  font-size: 14px;
+  border-color: transparent;
+}
+
+
+.forget-password-card button{
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-1c1c1b);
+  padding:10px 20px;
+  border-radius: 100px;
+}
+
+
+.forget-password-card .submit{
+  background-color: var(--color-232F3E);
+
+  color: white;
+}
+
+.forget-password-card .submit:hover{
+  background-color: var(--color-febd69);
+  color: var(--color-131921);
+}
+
+/* forgot password page end */
+
+
+/* reset password page start */
+
+.reset-password-card{
+  padding: 20px;
+  background-color: white;
+  width: 500px;
+  margin: 30px auto;
+}
+
+.reset-password-card h3{
+  font-size: 19px;
+  font-weight: 500;
+  color: #777;
+}
+
+.reset-password-card .form-control{
+  height: 50px;
+  background-color: var(--color-f5f5f7);
+  color: #777;
+  font-size: 14px;
+  border-color: transparent;
+}
+
+
+.reset-password-card button{
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-1c1c1b);
+  padding:10px 20px;
+  border-radius: 100px;
+}
+
+
+.reset-password-card .submit{
+  background-color: var(--color-232F3E);
+  color: white;
+}
+
+.reset-password-card .submit:hover{
+  background-color: var(--color-febd69);
+  color: var(--color-131921);
+}
+
+/* reset password page end*/
+
+
+
+:root {
+  --color-212529: #212529;
+  --color-ffd333: #ffd333;
+  --color-47ad24: #47ad24;
+  --color-e52e2e: #e52e2e;
+  --color-828599: #828599;
+  --color-3d464d: #ed464d;
+  --color-c3d4da: #ced4da;
+}
+
+.green {
+  color: var(--color-47ad24);
+  font-size: 14px;
+  font-family: Roboto !important;
+}
+.red {
+  color: var(--color-212529);
+  font-size: 14px;
+  font-family: Roboto !important;
+}
+.quill {
+  background-color: white;
+}
+
+.form-control {
+  box-shadow: none;
+  border-color: var(--color-c3d4da);
+}
+.title {
+  font: 28px;
+  font-family: Roboto !important;
+  color: var(--color-212529);
+}
+
+.sub-title {
+  font: 24px;
+  font-family: Roboto !important;
+  color: var(--color-212529);
+}
+.desc {
+  font: 14px;
+  font-family: Roboto !important;
+  color: var(--color-828599);
+}
+
+
+body {
+  font-family: Roboto, sans-serif;
+}
+
+.trigger {
+  padding: 0 24px;
+  font-size: 18px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+.ant-layout {
+  min-height: 100vh;
+}
+.ant-layout-sider {
+  flex: 0 0 250px !important;
+  max-width: 250px !important;
+  min-width: 250px !important;
+  width: 250px !important;
+}
+.ant-layout-sider-collapsed {
+  flex: 0 0 80px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
+  width: 80px !important;
+}
+.sm-logo {
+  display: none;
+}
+
+.ant-layout-sider-collapsed .sm-logo {
+  display: block;
+}
+.ant-layout-sider-collapsed .lg-logo {
+  display: none;
+}
+.logo {
+  background-color: #777;
+  margin: 0;
+  height: 64px;
+}
+main {
+  height: 85vh;
+  overflow-y: scroll;
+  background-color: transparent !important;
+}
+main::-webkit-scrollbar {
+  width: 0px;
+}
+.ant-menu-title-content {
+  font-size: 16px;
+}
+.ant-layout-header h5 {
+  line-height: 20px;
+  font-size: 14px;
+}
+.ant-layout-header p {
+  line-height: 20px;
+  font-size: 13px;
+}
+.ant-layout-header div .badge {
+  top: 16px;
+  right: -6px;
+}
+.error {
+  color: red;
+  font-size: 12px;
+}
+
