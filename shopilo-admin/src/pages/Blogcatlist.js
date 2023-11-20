@@ -24,15 +24,15 @@ const columns = [
       address: `London, Park Lane no. ${i}`,
     });
   }
-const Customers = () => {
+const Blogcatlist = () => {
   return (
     <div className="mt-4">
-    <h3 className="mb-5 title">Customers</h3>
-    <div>
-      <Table columns={columns} dataSource={data} />
-    </div>
-  </div>
+        <h3 className="mb-5 title">Blog Categories</h3>
+        <div>
+          <Table columns={columns} dataSource={data} />
+        </div>
+      </div>
   )
 }
 
-export default Customers
+export default Blogcatlist

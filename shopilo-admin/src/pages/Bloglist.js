@@ -1,7 +1,5 @@
 import React from 'react'
 import { Table } from 'antd';
-
-
 const columns = [
   {
     title: 'Name',
@@ -25,11 +23,10 @@ for (let i = 0; i < 46; i++) {
     address: `London, Park Lane no. ${i}`,
   });
 }
-
-const Categorylist = () => {
+const Bloglist = () => {
   return (
     <div className="mt-4">
-        <h3 className="mb-5 title">Product Categories</h3>
+        <h3 className="mb-5 title">Blog Categories</h3>
         <div>
           <Table columns={columns} dataSource={data} />
         </div>
@@ -37,4 +34,4 @@ const Categorylist = () => {
   )
 }
 
-export default Categorylist
+export default Bloglist

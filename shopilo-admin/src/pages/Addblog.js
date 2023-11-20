@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import CustomInput from "../components/CustomInput";
 
 import ReactQuill from "react-quill";
@@ -7,7 +6,6 @@ import "react-quill/dist/quill.snow.css";
 
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
-
 const { Dragger } = Upload;
 
 const props = {
@@ -30,18 +28,25 @@ const props = {
   },
 };
 
-const Addproduct = () => {
+const Addblog = () => {
   const [desc, setDesc] = useState();
   const handleDesc = (e) => {
     setDesc(e);
   };
   return (
-    <div>
-      <h3 className="mb-4"> Add Blog</h3>
+    <>
       <div>
-        <form action="">
-          <CustomInput type="text" label="Enter Product Title" />
-          <div className="my-3">
+        <h3 className="mb-4"> Add Blog</h3>
+        <div>
+          <form action="">
+            <CustomInput type="text" label="Enter Blog Title" />
+            <select
+              name="blog-category"
+              id=""
+              className="form-control py-3 my-3"
+            >
+              <option value="category">Select Blog Category</option>
+            </select>
             <Dragger {...props}>
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
@@ -54,8 +59,8 @@ const Addproduct = () => {
                 uploading company data or other banned files.
               </p>
             </Dragger>
-          </div>
-          <div className="mt-3">
+            <div className="mt-3">
+
             <ReactQuill
               theme="snow"
               value={desc}
@@ -63,24 +68,16 @@ const Addproduct = () => {
                 handleDesc(e);
               }}
             />
-          </div>
-          <CustomInput type="text" label="Enter Product Price" />
-
-          <select
-            name="product-category"
-            id=""
-            className="form-control py-3 my-3"
-          >
-            <option value="category">Select Product Category</option>
-          </select>
-
-          <button className="btn btn-success border-0 rounded-3 my-5">
-            Add Product
-          </button>
-        </form>
+            </div>
+            ;
+            <button className="btn btn-success border-0 rounded-3 my-5">
+              Add Blog
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default Addproduct;
+export default Addblog;
