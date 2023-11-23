@@ -1,32 +1,41 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Table } from 'antd';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductCategory } from '../features/productCategory/productCategorySlice';
 
 const columns = [
+  {
+    title: 'S.No.',
+    dataIndex: 'sno',
+  },
   {
     title: 'Name',
     dataIndex: 'name',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
+    title: 'Action',
+    dataIndex: 'actions',
   },
 ];
-const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    name: `Edward King ${i}`,
-    age: 32,
-    address: `London, Park Lane no. ${i}`,
-  });
-}
+
 
 const Categorylist = () => {
+  const dispatch=useDispatch()
+
+
+  useEffect(()=>{
+    dispatch(getProductCategory())
+  })
+  const {productsCategories} = useSelector((state)=>state.productCategory)
+  const data = [];
+  for (let i = 0; i < productsCategories.length; i++) {
+    data.push({
+      key: i+1,
+      sno: `${i}`,
+      name: productsCategories[i].title,
+    });
+  }
+
   return (
     <div className="mt-4">
         <h3 className="mb-5 title">Product Categories</h3>

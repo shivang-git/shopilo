@@ -14,7 +14,7 @@ export const updateCategory=async(req,res)=>{
     const {id}=req.params
     try {
         const newCategory=await Category.findByIdAndUpdate(id,req.body,{new:true})
-        res.json(updatedCategory)
+        res.json(newCategory)
     } catch (error) {
         throw new Error(error)
     }
