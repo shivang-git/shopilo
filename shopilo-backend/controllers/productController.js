@@ -1,9 +1,6 @@
 import Product from '../models/productModel.js'
 import AsyncHandler from 'express-async-handler'
 import User from '../models/userModel.js';
-import cloudinaryUpload from '../utils/cloudinary.js';
-import fs from 'fs'
-
 
 
 
@@ -85,23 +82,3 @@ export const addWishlist=async(req,res)=>{
     }
 }
 
-
-export const uploadImages=async(req,res)=>{
-    const {id}=req.params
-    try {
-        const upload=(path)=> cloudinaryUpload(path,"images");
-        const urls=[]
-        const files=req.files;
-        for(const file of files){
-            const {path}=file
-            const newpath=await upload(path)
-            urls.push(newpath)
-            fs.unlinkSync(path)
-        }
-        const findProduct= await Product.findByIdAndUpdate(id,{images:urls.map((file)=>{return file})},{new:true})
-        res.json(findProduct)
-    } catch (error) {
-        throw new Error(error)
-    }
-    res.json({msg:"helo"})
-}

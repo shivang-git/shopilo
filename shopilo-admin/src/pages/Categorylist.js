@@ -11,11 +11,7 @@ const columns = [
   {
     title: 'Name',
     dataIndex: 'name',
-  },
-  {
-    title: 'Action',
-    dataIndex: 'actions',
-  },
+  }
 ];
 
 
@@ -31,7 +27,7 @@ const Categorylist = () => {
   for (let i = 0; i < productsCategories.length; i++) {
     data.push({
       key: i+1,
-      sno: `${i}`,
+      sno: `${i+1}`,
       name: productsCategories[i].title,
     });
   }

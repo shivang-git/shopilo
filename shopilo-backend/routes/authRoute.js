@@ -17,27 +17,29 @@ import {
   LoginAdmin,
   getWishlist,
   saveAddress,
-
-  userCart,
   getUserCart,
   emptyCart,
   CreateOrder,
-  getOrders,
+  getAllOrders,
   updateOrderStatus,
+  getaOrder,
+  addtoCart,
 } from "../controllers/UserController.js";
 
 router.post("/register", RegisterUser);
 router.post("/login", LoginUser);
 router.post("/admin-login", LoginAdmin);
-router.post('/cart',AuthMiddleware,userCart)
-router.post('/cart/create-cart',AuthMiddleware,CreateOrder)
+router.post('/cart/create',AuthMiddleware,CreateOrder)
+router.post('/cart',AuthMiddleware,addtoCart)
 router.get("/all-users", GetallUser);
 router.get("/refresh", HandleRefreshToken);
 router.get("/logout", LogoutUser);
 router.get("/wishlist", AuthMiddleware, getWishlist);
+
+router.get('/get-orders',AuthMiddleware, IsAdmin,getaOrder)
+router.get('/getallorders',AuthMiddleware,IsAdmin,getAllOrders)
 router.get("/:id", AuthMiddleware, IsAdmin, GetUser);
 router.get('/cart',AuthMiddleware,getUserCart)
-router.get('/get-orders',getOrders)
 router.delete("/:id", DeleteUser);
 router.delete('/empty-cart',AuthMiddleware,emptyCart)
 router.put("/update-user", AuthMiddleware, IsAdmin, UpdateUser);

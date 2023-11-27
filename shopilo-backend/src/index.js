@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import AuthRouter from '../routes/authRoute.js';
 import ProductRouter from '../routes/productRoute.js';
 import categoryRouter from '../routes/categoryRoute.js'
+import UploadRouter from '../routes/uploadRoute.js'
 import cors from 'cors'
 //db connection
 import connectDB from '../config/dbConnect.js';
@@ -28,6 +29,7 @@ app.use(cookieParser())
 app.use('/api/user',AuthRouter)
 app.use('/api/product',ProductRouter)
 app.use('/api/category',categoryRouter)
+app.use('/api/upload',UploadRouter)
 //Routes
 
 //middleware

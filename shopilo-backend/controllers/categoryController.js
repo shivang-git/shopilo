@@ -1,4 +1,5 @@
 import Category from "../models/categoryModel.js";
+import { validateMongodbId } from "../utils/validateMongodb.js";
 
 export const createCategory=async(req,res)=>{
     try {
@@ -33,9 +34,9 @@ export const deleteCategory=async(req,res)=>{
 
 
 export const getCategory=async(req,res)=>{
-    const {id}=req.params
+   const {id}=req.params
     try {
-        const getCategory=await Category.findById(id);
+        const getCategory=await Category.findOne({_id:id});
         res.json(getCategory)
     } catch (error) {
         throw new Error(error)
@@ -44,7 +45,6 @@ export const getCategory=async(req,res)=>{
 
 
 export const getallCategory=async(req,res)=>{
-    const {title}=req.body
     try {
         const getallCategory=await Category.find();
         res.json(getallCategory)

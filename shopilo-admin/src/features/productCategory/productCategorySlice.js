@@ -23,7 +23,7 @@ export const productCategorySlice=createSlice({
             state.isLoading=false;
             state.isError=false;
             state.isSuccess=true;
-            state.products=action.payload;
+            state.productsCategories=action.payload;
         })
         .addCase(getProductCategory.rejected,(state,action)=>{
             state.isLoading=false;

@@ -1,80 +1,125 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import CustomInput from "../components/CustomInput";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import Dropzone from 'react-dropzone'
+import { useDispatch, useSelector } from "react-redux";
+import { getProductCategory } from "../features/productCategory/productCategorySlice";
+import { uploadImg} from "../features/upload/uploadSlice";
 
-import { InboxOutlined } from "@ant-design/icons";
-import { message, Upload } from "antd";
-
-const { Dragger } = Upload;
-
-const props = {
-  name: "file",
-  multiple: true,
-  action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (status === "done") {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-  onDrop(e) {
-    console.log("Dropped files", e.dataTransfer.files);
-  },
-};
 
 const Addproduct = () => {
-  const [desc, setDesc] = useState();
-  const handleDesc = (e) => {
-    setDesc(e);
-  };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProductCategory());
+  }, []);
+
+  const { productsCategories } = useSelector((state) => state.productCategory);
+
+  const schema = Yup.object().shape({
+    title: Yup.string().required("Title is Required"),
+    description: Yup.string().required("Description is Required"),
+    price: Yup.number().required("Price is Required"),
+    category: Yup.string().required("Category is Required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      price: "",
+      category: "",
+    },
+    validationSchema: schema,
+    onSubmit: (values) => {
+      alert("submited");
+    },
+  });
+
   return (
     <div>
       <h3 className="mb-4"> Add Blog</h3>
       <div>
-        <form action="">
-          <CustomInput type="text" label="Enter Product Title" />
-          <div className="my-3">
-            <Dragger {...props}>
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-              <p className="ant-upload-hint">
-                Support for a single or bulk upload. Strictly prohibited from
-                uploading company data or other banned files.
-              </p>
-            </Dragger>
+        <form action="" onSubmit={formik.handleSubmit}>
+          <CustomInput
+            type="text"
+            label="Enter Product Title"
+            name="title"
+            value={formik.values.title}
+            onChange={formik.handleChange}
+          />
+          <div className="error">
+            {formik.touched.title && formik.errors.title}
           </div>
+
           <div className="mt-3">
             <ReactQuill
               theme="snow"
-              value={desc}
-              onChange={(e) => {
-                handleDesc(e);
-              }}
+              name="description"
+              value={formik.values.description}
+              onChange={formik.descripiton}
             />
           </div>
-          <CustomInput type="text" label="Enter Product Price" />
+
+          <div className="error">
+            {formik.touched.description && formik.errors.description}
+          </div>
+          <CustomInput
+            type="text"
+            label="Enter Product Price "
+            name="price"
+            value={formik.values.price}
+            onChange={formik.handleChange}
+          />
+          <div className="error">
+            {formik.touched.price && formik.errors.price}
+          </div>
 
           <select
-            name="product-category"
+            name="category"
+            onChange={formik.handleChange("category")}
+            value={formik.values.category}
+            className="form-control py-3 mb-3"
             id=""
-            className="form-control py-3 my-3"
           >
-            <option value="category">Select Product Category</option>
+            <option value="">Select Category</option>
+            {productsCategories.map((i, j) => {
+              return (
+                <option key={j} value={i.title}>
+                  {i.title}
+                </option>
+              );
+            })}
           </select>
 
-          <button className="btn btn-success border-0 rounded-3 my-5">
+          <div className="error">
+            {formik.touched.category && formik.errors.category}
+          </div>
+
+          <div className="bg-white border-1 p-5 text-center">
+            <Dropzone onDrop={(acceptedFiles) =>  dispatch(uploadImg(acceptedFiles))}>
+              {({ getRootProps, getInputProps }) => (
+                <section>
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <p>
+                      Drag 'n' drop some files here, or click to select files
+                    </p>
+                  </div>
+                </section>
+              )}
+            </Dropzone>
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-success border-0 rounded-3 my-5"
+          >
             Add Product
           </button>
         </form>

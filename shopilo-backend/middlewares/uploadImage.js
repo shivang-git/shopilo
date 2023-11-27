@@ -1,7 +1,10 @@
 import multer from "multer";
 import sharp from "sharp";
 import fs from "fs";
-import path from "path";
+import { fileURLToPath } from 'url'
+import path, { dirname } from 'path'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const multerStorage = multer.diskStorage({
   destination: function (req, file, cb) {
