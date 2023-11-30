@@ -9,8 +9,14 @@ const uploadImg=async(data)=>{
     return response.data
 }
 
+const deleteImg=async(id)=>{
+    const response=await axios.delete(`${base_url}upload/`,id,config)
+    return response.data
+}
+
 const uploadService={
-    uploadImg
+    uploadImg,
+    deleteImg
 }
 
 

@@ -26,7 +26,7 @@ import {
   addtoCart,
 } from "../controllers/UserController.js";
 
-router.post("/register", RegisterUser);
+router.post('/register', RegisterUser);
 router.post("/login", LoginUser);
 router.post("/admin-login", LoginAdmin);
 router.post('/cart/create',AuthMiddleware,CreateOrder)

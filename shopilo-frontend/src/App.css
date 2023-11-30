@@ -896,3 +896,10 @@ padding: 10px 15px;
 }
 
 /* checkout page end*/
+
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
